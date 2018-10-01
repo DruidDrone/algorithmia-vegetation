@@ -1,4 +1,4 @@
-from Algorithmia.errors import import AlgorithmException
+from Algorithmia.errors import AlgorithmException
 
 def sanity(input):
     if type(input) is not dict:

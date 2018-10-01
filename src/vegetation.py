@@ -28,4 +28,4 @@ def vegetation_dir(src):
 def apply(input):
     sanity(input)
     src_images = input['src']
-    return {'percentage_vegetation': vegetaion_dir(src_images)}
+    return {'percentage_vegetation': vegetation_dir(src_images)}

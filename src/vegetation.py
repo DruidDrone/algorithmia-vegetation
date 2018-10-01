@@ -20,7 +20,7 @@ def vegetation_dir(src):
     segmented_images = 'data://.my/tmp'
     result = algo.pipe(dict(src=src, dst=segmented_images))
 
-    if result['status'] is not 'ok':
+    if result.result['status'] is not 'ok':
         raise AlgorithmException("error segmenting images")
 
     seg_dir = client.dir(segmented_images)

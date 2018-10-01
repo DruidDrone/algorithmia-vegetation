@@ -11,10 +11,7 @@ def vegetation_dir(src):
     return [vegetation(img_loc) for img_loc in segmented_images]
 
 
-    
-
-
 def apply(input):
     sanity(input)
     src_images = input['src']
-    return "{}"
+    return {'percentage_vegetation': vegetaion_dir(src_images)}

@@ -1,11 +1,16 @@
 import Algorithmia
 from Algorithmia.errors import AlgorithmException
 from .util import sanity 
+from PIL import Image
+import numpy as np
 
 
-def vegetation(data_file):
+def vegetation(data_file, vegetation_class_index=8):
     f = data_file.getFile()
-    return -1
+    bmp_img = Image.open(f.name)
+    np_img = np.array(bmp_img)
+    np_img = np_img.flatten()
+    return np.sum(np_img == vegetation_class_index)/len(np_img)
 
 
 def vegetation_dir(src):

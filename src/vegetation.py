@@ -2,13 +2,27 @@ import Algorithmia
 
 from .util import sanity 
 
-def vegetation(src):
-    return 0
+def vegetation(data_file):
+    f = data_file.getFile()
+    return -1
 
 
 def vegetation_dir(src):
-    segmented_images = []
-    return [vegetation(img_loc) for img_loc in segmented_images]
+    client = Algorithmia.client()
+    
+    src_dir = client.dir(src)
+    if not src_dir.exists():
+        raise AlgorithmException("src ({}) does not exist.".format(src))
+
+    algo = algo_client.algo('nocturne/segment/0d0646cbca4747a4d0b38f93e8acb41c5cef5c61').set_options(timeout=600)
+    segmented_images = 'data://.session/'
+    result = algo.pipe(dict(src=src, dst=segmented_images))
+
+    if result['status'] is not 'ok':
+        raise AlgorithmException("error segmenting images")
+
+    seg_dir = client.dir(segmented_images)
+    return [vegetation(img_loc) for img_loc in seg_dir.files()]
 
 
 def apply(input):

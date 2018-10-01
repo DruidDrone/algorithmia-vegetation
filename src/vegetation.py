@@ -1,6 +1,20 @@
 import Algorithmia
 
-# API calls will begin at the apply() method, with the request body passed as 'input'
-# For more details, see algorithmia.com/developers/algorithm-development/languages
+from .util import sanity 
+
+def vegetation(src):
+    return 0
+
+
+def vegetation_dir(src):
+    segmented_images = []
+    return [vegetation(img_loc) for img_loc in segmented_images]
+
+
+    
+
+
 def apply(input):
-    return "hello {}".format(input)
+    sanity(input)
+    src_images = input['src']
+    return "{}"

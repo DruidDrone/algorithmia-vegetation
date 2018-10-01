@@ -1,5 +1,5 @@
 import Algorithmia
-from Algorithmia.errors import import AlgorithmException
+from Algorithmia.errors import AlgorithmException
 from .util import sanity 
 
 

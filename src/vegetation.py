@@ -15,7 +15,7 @@ def vegetation_dir(src):
     if not src_dir.exists():
         raise AlgorithmException("src ({}) does not exist.".format(src))
 
-    algo = algo_client.algo('nocturne/segment/0d0646cbca4747a4d0b38f93e8acb41c5cef5c61').set_options(timeout=600)
+    algo = client.algo('nocturne/segment/0d0646cbca4747a4d0b38f93e8acb41c5cef5c61').set_options(timeout=600)
     segmented_images = 'data://.session/'
     result = algo.pipe(dict(src=src, dst=segmented_images))
 

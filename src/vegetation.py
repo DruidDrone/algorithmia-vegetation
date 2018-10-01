@@ -1,6 +1,7 @@
 import Algorithmia
-
+from Algorithmia.errors import import AlgorithmException
 from .util import sanity 
+
 
 def vegetation(data_file):
     f = data_file.getFile()

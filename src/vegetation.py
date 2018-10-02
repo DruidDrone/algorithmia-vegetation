@@ -49,14 +49,13 @@ def vegetation_dir(src):
     if not src_dir.exists():
         raise AlgorithmException("src ({}) does not exist.".format(src))
 
-    algo = client.algo('nocturne/segment').set_options(timeout=3600)
+    algo = client.algo('nocturne/segment/94bd3d871bc4c6b57386c5127ceb146cc3248e38').set_options(timeout=3600)
     segmented_images = 'data://.session'
     result = algo.pipe(dict(src=src, dst=segmented_images))
     seg_dir = client.dir(segmented_images)
     percent = [vegetation(img_loc) for img_loc in seg_dir.files()]
-    #f_names = [f.getName() for f in seg_dir.files()]
-    #return zip(f_names, percent)
-    return percent
+    f_names = [f.getName() for f in seg_dir.files()]
+    return zip(f_names, percent)
 
 
 def apply(input):

@@ -15,7 +15,7 @@ class Lab(Vegetator):
         super().__init__()
 
     def pre_processing(self, src):
-        src_dir = client.dir(src)
+        src_dir = self.client.dir(src)
         if not src_dir.exists():
             raise AlgorithmException("src ({}) does not exist.".format(src))
         return src_dir

@@ -25,10 +25,9 @@ class Deep(Vegetator):
         # segment algo. will output results in to data//.session location which is
         # only active during the request.
         segmented_images = 'data://.session'
-        algo = client.algo('nocturne/segment').set_options(timeout=3000)
+        algo = self.client.algo('nocturne/segment').set_options(timeout=3000)
         result = algo.pipe(dict(src=src, dst=segmented_images))
-
-        return client.dir(segmented_images)
+        return self.client.dir(segmented_images)
 
     def post_processing(self, src):
         """Use deep image segmentation to determine percentage vegetation present

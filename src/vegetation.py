@@ -6,6 +6,7 @@ import numpy as np
 
 
 def vegetation(data_file, vegetation_class_index=8):
+    """."""
     f = data_file.getFile()
     bmp_img = Image.open(f.name)
     np_img = np.array(bmp_img)

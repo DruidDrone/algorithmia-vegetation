@@ -7,7 +7,7 @@
 ################################################################################
 from Algorithmia.errors import AlgorithmException
 from PIL import Image
-from vegetator import Vegetator
+from .vegetator import Vegetator
 
 class Lab(Vegetator):
 

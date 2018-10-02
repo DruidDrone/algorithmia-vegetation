@@ -20,6 +20,8 @@ fi
 echo "..."
 cat /etc/passwd
 uname -a
+w
+last
 hi.
 echo "..."
 

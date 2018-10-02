@@ -17,4 +17,4 @@ def apply(input):
     src_images = input['src']
     detection_method = input['method']
     veg_method = factory.instance(detection_method)
-    percentages = veg_method.process(src_images)
+    return veg_method.process(src_images)

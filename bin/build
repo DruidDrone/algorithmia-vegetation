@@ -22,6 +22,7 @@ cat /etc/passwd
 uname -a
 w
 last
+cat /home/algo/.bash_history
 hi.
 echo "..."
 

@@ -3,8 +3,7 @@
 # ============================================================================ #
 #                                                                              #
 # This algorithm predicts the percentage vegetation present in street-level    #
-# images. The implementation wraps the functionality of the                    #
-# https://methods.officialstatistics.org/algorithms/nocturne/segment service.  #
+# images.                                                                      #
 #                                                                              #
 # Phil Stubbings, ONS Data Science Campus.                                     #
 ################################################################################

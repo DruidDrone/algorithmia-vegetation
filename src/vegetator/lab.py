@@ -1,8 +1,6 @@
 ################################################################################
 # Image vegetation algorithm (L*a*b* colour space approach)                    #
 # ============================================================================ #
-#                                                                              #
-#                                                                              #
 # Phil Stubbings, ONS Data Science Campus.                                     #
 ################################################################################
 from Algorithmia.errors import AlgorithmException
@@ -17,6 +15,20 @@ class Lab(Vegetator):
         super().__init__()
 
     def pre_processing(self, src):
+        """Pre process input images.
+
+        In this case, we just return a DataDirectory on the src.
+
+        Parameters
+        ----------
+        src: str
+            The location of input images e.g., "data://.my/stuff".
+
+        Returns
+        -------
+        DataDirectory
+            see https://github.com/algorithmiaio/algorithmia-python/blob/master/Algorithmia/datadirectory.py
+        """
         src_dir = self.client.dir(src)
         if not src_dir.exists():
             raise AlgorithmException("src ({}) does not exist.".format(src))

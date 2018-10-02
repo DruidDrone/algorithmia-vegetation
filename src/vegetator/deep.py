@@ -1,9 +1,8 @@
 ################################################################################
-# Algorithmia image vegetation algorithm                                       #
+# Algorithmia (deep) image vegetation algorithm                                #
 # ============================================================================ #
 #                                                                              #
-# This algorithm predicts the percentage vegetation present in street-level    #
-# images. The implementation wraps the functionality of the                    #
+# Wraps functionality of the                                                   #
 # https://methods.officialstatistics.org/algorithms/nocturne/segment service.  #
 #                                                                              #
 # Phil Stubbings, ONS Data Science Campus.                                     #
@@ -19,8 +18,22 @@ class Deep(Vegetator):
         super().__init__()
 
     def pre_processing(self, src):
-    
-        # use https://methods.officialstatistics.org/algorithms/nocturne/segment
+        """Pre process input images.
+
+        In this case, pre-processing involves sending the iamges to the deep
+        image segmentation service and returning the segmented images as the
+        result.
+
+        Parameters
+        ----------
+        src: str
+            The location of input images e.g., "data://.my/stuff".
+
+        Returns
+        -------
+        DataDirectory
+            see https://github.com/algorithmiaio/algorithmia-python/blob/master/Algorithmia/datadirectory.py
+        """
         # set timeout to maximum 50 minutes.
         # segment algo. will output results in to data//.session location which is
         # only active during the request.
@@ -30,17 +43,18 @@ class Deep(Vegetator):
         return self.client.dir(segmented_images)
 
     def post_processing(self, src):
-        """Use deep image segmentation to determine percentage vegetation present
-        in an algorithmia DataFile.
+        """Calculate vegetation percentage.
+
+        Given as input the segmented images, extract the percentage vegetation.
+
+        Each pixel can have up to 256 possible labels.
+        In this implementation, we make use of a pre-trained PSPNet which will
+        assign 8 to a pixel if that pixel belongs to the vegetation class.
 
         Parameters
         ----------
-        data_file: DataFile
-            An algorithmia data file.
-        vegetation_class_index: int
-            Vegetation class index. Each pixel can have up to 256 possible labels.
-            In this implementation, we make use of a pre-trained PSPNet which will
-            assign 8 to a pixel if that pixel belongs to the vegetation class.
+        src: DataFile
+            see https://github.com/algorithmiaio/algorithmia-python/blob/master/Algorithmia/datafile.py
 
         Returns
         -------

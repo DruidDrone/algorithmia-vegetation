@@ -3,7 +3,7 @@ from Algorithmia.errors import AlgorithmException
 from .util import sanity 
 from PIL import Image
 import numpy as np
-
+from time import time
 
 def vegetation(data_file, vegetation_class_index=8):
     """Determine percentage vegetation present in an algorithmia DataFile.
@@ -53,20 +53,29 @@ def vegetation_dir(src):
     # set timeout to maximum 50 minutes.
     # segment algo. will output results in to data//.session location which is
     # only active during the request.
+    t = time()
     segmented_images = 'data://.session'
     algo = client.algo('nocturne/segment').set_options(timeout=3000)
     result = algo.pipe(dict(src=src, dst=segmented_images))
+    t1 = time() - t
 
     # get the ratio of 'vegetation' pixels present in the resulting segmented
     # images.
     seg_dir = client.dir(segmented_images)
+    t = time()
     percent = [vegetation(img_loc) for img_loc in seg_dir.files()]
+    t2 = time() - t
     f_names = [f.getName() for f in src_dir.files()]
-    return list(zip(f_names, percent))
+    return int(1000*t1), int(1000*t2), list(zip(f_names, percent))
 
 
 def apply(input):
     """Algorithmia entry point."""
     sanity(input)
     src_images = input['src']
-    return {'percentage_vegetation': vegetation_dir(src_images)}
+    t1, t2, res = vegetation_dir(src_images)
+    return {
+        'percentage_vegetation': res,
+        'segmentation_ms': t1,
+        'vegetation_ms': t2
+    }

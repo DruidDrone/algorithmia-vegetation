@@ -18,12 +18,7 @@ else
 fi
 
 echo "..."
-cat /etc/passwd
 uname -a
-w
-last
-cat /home/algo/.bash_history
-hi.
 echo "..."
 
 pip install $extra_args -r requirements.txt --target dependencies

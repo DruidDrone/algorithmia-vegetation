@@ -4,7 +4,7 @@
 
 > Part of trees/ungp
 
-This algorithm accepts as input a direcory of images hosted on algorithmia,
+This algorithm accepts as input a directory of images hosted on algorithmia,
 amazon s3 or dropbox and returns the percentage vegetation detected in each
 image.
 

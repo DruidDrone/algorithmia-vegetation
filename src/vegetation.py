@@ -1,3 +1,13 @@
+################################################################################
+# Algorithmia image vegetation algorithm                                       #
+# ============================================================================ #
+#                                                                              #
+# This algorithm predicts the percentage vegetation present in street-level    #
+# images. The implementation wraps the functionality of the                    #
+# https://methods.officialstatistics.org/algorithms/nocturne/segment service.  #
+#                                                                              #
+# Phil Stubbings, ONS Data Science Campus.                                     #
+################################################################################
 import Algorithmia
 from Algorithmia.errors import AlgorithmException
 from .util import sanity 
@@ -40,8 +50,11 @@ def vegetation_dir(src):
 
     Returns
     -------
-    list
-        List of (filename, percentage) tuples.            
+    dict 
+        Dictionary containing original segmentation result (for testing),
+        Time in milliseconds to invoke segmentation service,
+        Time in milliseconds to calculate pixel vegetation,
+        List of (original filename, percentage) tuples.            
     """
     client = Algorithmia.client()
     

@@ -1,10 +1,6 @@
 ################################################################################
 # Image Vegetator                                                              # 
 # ============================================================================ #
-#                                                                              #
-# Wraps functionality of the                                                   #
-# https://methods.officialstatistics.org/algorithms/nocturne/segment service.  #
-#                                                                              #
 # Phil Stubbings, ONS Data Science Campus.                                     #
 ################################################################################
 import Algorithmia

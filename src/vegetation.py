@@ -8,87 +8,13 @@
 #                                                                              #
 # Phil Stubbings, ONS Data Science Campus.                                     #
 ################################################################################
-import Algorithmia
-from Algorithmia.errors import AlgorithmException
 from .util import sanity 
-from PIL import Image
-import numpy as np
-from time import time
-
-def vegetation(data_file, vegetation_class_index=8):
-    """Determine percentage vegetation present in an algorithmia DataFile.
-
-    Parameters
-    ----------
-    data_file: DataFile
-        An algorithmia data file.
-    vegetation_class_index: int
-        Vegetation class index. Each pixel can have up to 256 possible labels.
-        In this implementation, we make use of a pre-trained PSPNet which will
-        assign 8 to a pixel if that pixel belongs to the vegetation class.
-
-    Returns
-    -------
-    float
-        Percentage vegetation present in the scene.
-    """
-    f = data_file.getFile()
-    bmp_img = Image.open(f.name)
-    np_img = np.array(bmp_img)
-    np_img = np_img.flatten()
-    return round(np.sum(np_img == vegetation_class_index)/len(np_img), 4)
-
-
-def vegetation_dir(src):
-    """Determine percentage vegetation for all images in an algorithmia hosted
-    directpry.
-
-    Parameters
-    ----------
-    src: str
-        An algorithmia hosted directory of street-level images.
-
-    Returns
-    -------
-    dict 
-        Dictionary containing original segmentation result (for testing),
-        Time in milliseconds to invoke segmentation service,
-        Time in milliseconds to calculate pixel vegetation,
-        List of (original filename, percentage) tuples.            
-    """
-    client = Algorithmia.client()
-    
-    src_dir = client.dir(src)
-    if not src_dir.exists():
-        raise AlgorithmException("src ({}) does not exist.".format(src))
-
-    # use https://methods.officialstatistics.org/algorithms/nocturne/segment
-    # set timeout to maximum 50 minutes.
-    # segment algo. will output results in to data//.session location which is
-    # only active during the request.
-    t = time()
-    segmented_images = 'data://.session'
-    algo = client.algo('nocturne/segment').set_options(timeout=3000)
-    result = algo.pipe(dict(src=src, dst=segmented_images))
-    t1 = time() - t
-
-    # get the ratio of 'vegetation' pixels present in the resulting segmented
-    # images.
-    seg_dir = client.dir(segmented_images)
-    t = time()
-    percent = [vegetation(img_loc) for img_loc in seg_dir.files()]
-    t2 = time() - t
-    f_names = [f.getName() for f in src_dir.files()]
-    return {
-            'segmentation_result': result.result,
-            'segmentation_ms': int(1000*t1),
-            'vegetation_ms': int(1000*t2),
-            'vegetation': list(zip(f_names, percent))
-    }
-
+from .vegetator import factory 
 
 def apply(input):
     """Algorithmia entry point."""
     sanity(input)
     src_images = input['src']
-    return vegetation_dir(src_images)
+    detection_method = input['method']
+    veg_method = factory.instance(detection_method)
+    percentages = veg_method.process(src_images)

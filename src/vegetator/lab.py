@@ -53,8 +53,7 @@ class Lab(Vegetator):
             Where 0 corresponds to 0% detected green in the image,
             1 corresponds to 100% green image.     
         """
-        image_path = data_file.getFile()
-        image = Image.open(image_path)
+        image = Image.open(src.getFile())
         image = np.array(image)
 
         # convert RGB ordered image to lab space

@@ -8,7 +8,6 @@ This algorithm accepts as input a direcory of images hosted on algorithmia,
 amazon s3 or dropbox and returns the percentage vegetation detected in each
 image.
 
-
 ## Running
 
 With algorithmia `algo` client:
@@ -27,7 +26,6 @@ algo run nocturne/vegetation/$(git rev-parse HEAD) -d \
 Completed in 1.4 seconds
 {"percentage_vegetation":["0.0087","0.0000","0.0297"]}
 ```
-
 
 ## Maintainer
 

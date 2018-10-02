@@ -66,16 +66,16 @@ def vegetation_dir(src):
     percent = [vegetation(img_loc) for img_loc in seg_dir.files()]
     t2 = time() - t
     f_names = [f.getName() for f in src_dir.files()]
-    return int(1000*t1), int(1000*t2), list(zip(f_names, percent))
+    return {
+            'segmentation_result': result.result,
+            'segmentation_ms': int(1000*t1),
+            'vegetation_ms': int(1000*t2),
+            'vegetation': list(zip(f_names, percent))
+    }
 
 
 def apply(input):
     """Algorithmia entry point."""
     sanity(input)
     src_images = input['src']
-    t1, t2, res = vegetation_dir(src_images)
-    return {
-        'percentage_vegetation': res,
-        'segmentation_ms': t1,
-        'vegetation_ms': t2
-    }
+    return vegetation_dir(src_images)

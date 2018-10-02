@@ -9,6 +9,7 @@ from Algorithmia.errors import AlgorithmException
 from PIL import Image
 from .vegetator import Vegetator
 import numpy as np
+import cv2
 
 class Lab(Vegetator):
 

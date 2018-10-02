@@ -61,7 +61,7 @@ def vegetation_dir(src):
     # images.
     seg_dir = client.dir(segmented_images)
     percent = [vegetation(img_loc) for img_loc in seg_dir.files()]
-    f_names = [f.getName() for f in seg_dir.files()]
+    f_names = [f.getName() for f in src_dir.files()]
     return list(zip(f_names, percent))
 
 

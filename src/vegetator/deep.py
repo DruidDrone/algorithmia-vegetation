@@ -11,7 +11,7 @@
 import Algorithmia
 from PIL import Image
 import numpy as np
-
+from vegetator import Vegetator
 
 class Deep(Vegetator): 
 

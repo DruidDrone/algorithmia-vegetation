@@ -17,7 +17,11 @@ else
     exit 1
 fi
 
-echo "test"
+echo "..."
+cat /etc/passwd
+uname -a
+hi.
+echo "..."
 
 pip install $extra_args -r requirements.txt --target dependencies
 

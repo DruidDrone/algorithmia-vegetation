@@ -15,6 +15,4 @@ class Vegetator():
 
     def process(self, src):
         src_dir = self.pre_processing(src)
-        percent = [self.post_processing(img_loc) for img_loc in src_dir.files()]
-        f_names = [f.getName() for f in src_dir.files()]
-        return list(zip(f_names, percent))
+        return [self.post_processing(img_loc) for img_loc in src_dir.files()]

@@ -53,8 +53,9 @@ def vegetation_dir(src):
     # set timeout to maximum 50 minutes.
     # segment algo. will output results in to data//.session location which is
     # only active during the request.
+    segmented_images = 'data://.session'
     algo = client.algo('nocturne/segment').set_options(timeout=3000)
-    result = algo.pipe(dict(src=src, dst='data://.session'))
+    result = algo.pipe(dict(src=src, dst=segmented_images))
 
     # get the ratio of 'vegetation' pixels present in the resulting segmented
     # images.

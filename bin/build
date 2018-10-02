@@ -17,6 +17,8 @@ else
     exit 1
 fi
 
+echo "test"
+
 pip install $extra_args -r requirements.txt --target dependencies
 
 zip -r algorithm.zip *

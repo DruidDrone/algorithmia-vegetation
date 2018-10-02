@@ -54,8 +54,9 @@ def vegetation_dir(src):
     result = algo.pipe(dict(src=src, dst=segmented_images))
     seg_dir = client.dir(segmented_images)
     percent = [vegetation(img_loc) for img_loc in seg_dir.files()]
-    f_names = [f.getName() for f in seg_dir.files()]
-    return zip(f_names, percent)
+    #f_names = [f.getName() for f in seg_dir.files()]
+    #return zip(f_names, percent)
+    return percent
 
 
 def apply(input):

@@ -33,5 +33,5 @@ class Vegetator():
             A dictionary containing filenames and associated percentage vegetation scores.
         """
         file_name = lambda img_loc: img_loc[img_loc.rfind("/")+1:] 
-        files = src if type(src) is list else self.pre_processing(src).files()
+        files = [self.client.file(f) for f in src] if type(src) is list else self.pre_processing(src).files()
         return {file_name(img_loc.getName()):self.post_processing(img_loc) for img_loc in files}

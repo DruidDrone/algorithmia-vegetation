@@ -39,9 +39,16 @@ class Vegetator():
             file_str = img_loc[idx+1:]
             return self.client.dir(data_dir).file(file_str)
 
-        #files = self.pre_processing(src).files()
-        #files = self.pre_processing([get_datafile(f) for f in src]).files() if type(src) is list else self.pre_processing(src).files()
-        files = [get_datafile(f) for f in src] if type(src) is list else self.pre_processing(src).files()
-        file_name = lambda file_str: file_str[file_str.rfind("/")+1:]
-        #return {file_name(img_loc.getName()):self.post_processing(img_loc) for img_loc in files}
-        return dict(zip([file_name(f.getName()) for f in self.client.dir(src).files()], [self.post_processing(img_loc) for img_loc in files]))
+        files = self.pre_processing(src).files()
+        file_name = lambda file_str: file_str[file_str.rfind("/")+1:]      
+
+
+
+        orig_files = [file_name(f.getName()) for f in self.client.dir(src).files()]
+        file_map = {f[:f.rfind(".")]+".bmp":f for f in orig_files}
+        results = {file_name(img_loc.getName()):self.post_processing(img_loc) for img_loc in files}
+        fixed_results = {file_map[k]:v for k, v in results} # hack: map back .bmp to original filenames.
+        return fixed_results
+
+
+        #return dict(zip([file_name(f.getName()) for f in self.client.dir(src).files()], [self.post_processing(img_loc) for img_loc in files]))

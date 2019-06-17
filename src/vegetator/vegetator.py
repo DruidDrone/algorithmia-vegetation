@@ -32,6 +32,12 @@ class Vegetator():
             A list of predicted percentage vegetation for each image.
             A dictionary containing filenames and associated percentage vegetation scores.
         """
-        file_name = lambda img_loc: img_loc[img_loc.rfind("/")+1:] 
-        files = [self.client.file(f) for f in src] if type(src) is list else self.pre_processing(src).files()
+        
+        def get_datafile(img_loc):
+            idx = img_loc.rfind("/")
+            data_dir = img_loc[:idx]
+            file_str = img_loc[idx+1:]
+            return self.dir(data_dir).file(file_str)
+
+        files = [get_datafile(f) for f in src] if type(src) is list else self.pre_processing(src).files()
         return {file_name(img_loc.getName()):self.post_processing(img_loc) for img_loc in files}

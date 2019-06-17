@@ -30,6 +30,7 @@ class Vegetator():
         -------
         list
             A list of predicted percentage vegetation for each image.
+            A dictionary containing filenames and associated percentage vegetation scores.
         """
-        src_dir = self.pre_processing(src)
-        return [self.post_processing(img_loc) for img_loc in src_dir.files()]
+        files = src if type(src) is list else self.pre_processing(src).files()
+        return {img_loc[img_loc.rfind("/")+1:]:self.post_processing(img_loc) for img_loc in files}

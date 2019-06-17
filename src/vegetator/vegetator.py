@@ -47,7 +47,7 @@ class Vegetator():
         orig_files = [file_name(f.getName()) for f in self.client.dir(src).files()]
         file_map = {f[:f.rfind(".")]+".bmp":f for f in orig_files}
         results = {file_name(img_loc.getName()):self.post_processing(img_loc) for img_loc in files}
-        fixed_results = {file_map[k]:v for k, v in results} # hack: map back .bmp to original filenames.
+        fixed_results = {file_map[k]:v for k, v in results.items()} # hack: map back .bmp to original filenames.
         return fixed_results
 
 

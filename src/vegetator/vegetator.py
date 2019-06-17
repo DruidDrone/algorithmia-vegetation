@@ -37,7 +37,8 @@ class Vegetator():
             idx = img_loc.rfind("/")
             data_dir = img_loc[:idx]
             file_str = img_loc[idx+1:]
-            return self.client.dir(data_dir).file(file_str)
+            return self.client.dir(data_dir)
+            #return self.client.dir(data_dir).file(file_str)
 
         files = [get_datafile(f) for f in src] if type(src) is list else self.pre_processing(src).files()
         return {file_name(img_loc.getName()):self.post_processing(img_loc) for img_loc in files}
